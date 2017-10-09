@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Goodsprolist.dao.GoodsprolistDao">
+
+    <sql id="baseColumns" >
+        id,goodskindid,propertyid
+    </sql>
+
+    <insert id="addGoodsprolist" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" >
+        INSERT INTO goodsprolist (id,goodskindid,propertyid)
+        VALUES (#{id,jdbcType=INTEGER},#{goodskindid,jdbcType=INTEGER},#{propertyid,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getGoodsprolistList" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" resultType="com.another.Goodsprolist.entity.Goodsprolist" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM goodsprolist
+        <include refid="getGoodsprolistListConditionSql" />
+        ORDER BY goodsprolist.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getGoodsprolistListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="goodskindid!=null"  >
+               AND goodskindid=#{goodskindid,jdbcType=INTEGER},
+            </if>
+            <if test="propertyid!=null"  >
+               AND propertyid=#{propertyid,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getGoodsprolistSize" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" resultType="Long" >
+        SELECT COUNT(goodsprolist.id) FROM goodsprolist
+        <include refid="getGoodsprolistListConditionSql" />
+    </select>
+
+    <update id="updateGoodsprolist" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" >
+        UPDATE goodsprolist
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="goodskindid!=null"  >
+               goodskindid=#{goodskindid,jdbcType=INTEGER},
+            </if>
+            <if test="propertyid!=null"  >
+               propertyid=#{propertyid,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE goodsprolist.ID=#{id}
+    </update>
+
+    <delete id="deleteGoodsprolist" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" >
+        DELETE FROM goodsprolist where ID=#{id}
+    </delete>
+
+    <select id="getGoodsprolistById" parameterType="com.another.Goodsprolist.pageModel.PageGoodsprolist" resultType="com.another.Goodsprolist.entity.Goodsprolist">
+        SELECT
+        <include refid="baseColumns" />
+        FROM goodsprolist
+        WHERE goodsprolist.id=#{id}
+    </select>
+
+
+</mapper>

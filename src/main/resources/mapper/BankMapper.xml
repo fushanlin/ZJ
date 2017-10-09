@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Bank.dao.BankDao">
+
+    <sql id="baseColumns" >
+        id,pid,name,code,companyid,kind,amount,frozenamount,state,platform
+    </sql>
+
+    <insert id="addBank" parameterType="com.another.Bank.pageModel.PageBank" >
+        INSERT INTO bank (id,pid,name,code,companyid,kind,amount,frozenamount,state,platform)
+        VALUES (#{id,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{companyid,jdbcType=INTEGER},#{kind,jdbcType=INTEGER},#{amount,jdbcType=VARCHAR},#{frozenamount,jdbcType=VARCHAR},#{state,jdbcType=INTEGER},#{platform,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getBankList" parameterType="com.another.Bank.pageModel.PageBank" resultType="com.another.Bank.entity.Bank" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM bank
+        <include refid="getBankListConditionSql" />
+        ORDER BY bank.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getBankListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="pid!=null"  >
+               AND pid=#{pid,jdbcType=INTEGER},
+            </if>
+            <if test="name!=null"  >
+               AND name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code!=null"  >
+               AND code=#{code,jdbcType=VARCHAR},
+            </if>
+            <if test="companyid!=null"  >
+               AND companyid=#{companyid,jdbcType=INTEGER},
+            </if>
+            <if test="kind!=null"  >
+               AND kind=#{kind,jdbcType=INTEGER},
+            </if>
+            <if test="amount!=null"  >
+               AND amount=#{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="frozenamount!=null"  >
+               AND frozenamount=#{frozenamount,jdbcType=VARCHAR},
+            </if>
+            <if test="state!=null"  >
+               AND state=#{state,jdbcType=INTEGER},
+            </if>
+            <if test="platform!=null"  >
+               AND platform=#{platform,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getBankSize" parameterType="com.another.Bank.pageModel.PageBank" resultType="Long" >
+        SELECT COUNT(bank.id) FROM bank
+        <include refid="getBankListConditionSql" />
+    </select>
+
+    <update id="updateBank" parameterType="com.another.Bank.pageModel.PageBank" >
+        UPDATE bank
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="pid!=null"  >
+               pid=#{pid,jdbcType=INTEGER},
+            </if>
+            <if test="name!=null"  >
+               name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code!=null"  >
+               code=#{code,jdbcType=VARCHAR},
+            </if>
+            <if test="companyid!=null"  >
+               companyid=#{companyid,jdbcType=INTEGER},
+            </if>
+            <if test="kind!=null"  >
+               kind=#{kind,jdbcType=INTEGER},
+            </if>
+            <if test="amount!=null"  >
+               amount=#{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="frozenamount!=null"  >
+               frozenamount=#{frozenamount,jdbcType=VARCHAR},
+            </if>
+            <if test="state!=null"  >
+               state=#{state,jdbcType=INTEGER},
+            </if>
+            <if test="platform!=null"  >
+               platform=#{platform,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE bank.ID=#{id}
+    </update>
+
+    <delete id="deleteBank" parameterType="com.another.Bank.pageModel.PageBank" >
+        DELETE FROM bank where ID=#{id}
+    </delete>
+
+    <select id="getBankById" parameterType="com.another.Bank.pageModel.PageBank" resultType="com.another.Bank.entity.Bank">
+        SELECT
+        <include refid="baseColumns" />
+        FROM bank
+        WHERE bank.id=#{id}
+    </select>
+
+
+</mapper>

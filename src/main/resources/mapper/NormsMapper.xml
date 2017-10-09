@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.norms.dao.NormsDao">
+    <insert id="addnorms" parameterType="com.another.norms.entity.Norms" useGeneratedKeys="true" keyProperty="id" >
+        insert into norms(kindid,norms,pid) values(#{kindid},#{norms},#{pid})
+    </insert>
+    <update id="update" parameterType="com.another.norms.entity.Norms"  >
+        update norms set norms=#{norms},pid=#{pid},kindid=#{kindid} where id=#{id}
+    </update>
+
+</mapper>

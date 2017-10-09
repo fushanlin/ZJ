@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.store.dao.StoreDao">
+    <select id="addstore" parameterType="com.another.store.entity.Store" statementType="CALLABLE">
+           {CALL addStore(
+           #{pid,jdbcType=INTEGER,mode=IN},
+           #{name,jdbcType=VARCHAR,mode=IN},
+           #{address,jdbcType=VARCHAR,mode=IN},
+           #{telephone,jdbcType=VARCHAR,mode=IN},
+           #{coordinate,jdbcType=VARCHAR,mode=IN},
+           #{state,jdbcType=INTEGER,mode=IN},
+           #{label,jdbcType=INTEGER,mode=IN},
+           #{masterid,jdbcType=INTEGER,mode=IN},
+           #{returned,jdbcType=INTEGER,mode=OUT}
+    )}
+    </select>
+    <select id="updatestore" parameterType="com.another.store.entity.Store" statementType="CALLABLE">
+        {CALL updateStore(
+        #{id,jdbcType=INTEGER,mode=IN},
+        #{pid,jdbcType=INTEGER,mode=IN},
+        #{name,jdbcType=VARCHAR,mode=IN},
+        #{address,jdbcType=VARCHAR,mode=IN},
+        #{telephone,jdbcType=VARCHAR,mode=IN},
+        #{coordinate,jdbcType=VARCHAR,mode=IN},
+        #{state,jdbcType=INTEGER,mode=IN},
+        #{label,jdbcType=INTEGER,mode=IN},
+        #{masterid,jdbcType=INTEGER,mode=IN},
+        #{returned,jdbcType=INTEGER,mode=OUT}
+        )}
+    </select>
+    <select id="addseat" parameterType="com.another.store.entity.Seat" statementType="CALLABLE">
+        {CALL addSeat(
+        #{pid,jdbcType=INTEGER,mode=IN},
+        #{name,jdbcType=VARCHAR,mode=IN},
+        #{monitor,jdbcType=VARCHAR,mode=IN},
+        #{storeid,jdbcType=INTEGER,mode=IN},
+        #{returned,jdbcType=INTEGER,mode=OUT}
+        )}
+    </select>
+    <select id="updateseat" parameterType="com.another.store.entity.Seat" statementType="CALLABLE">
+        {CALL updateSeat(
+        #{id,jdbcType=INTEGER,mode=IN},
+        #{pid,jdbcType=INTEGER,mode=IN},
+        #{name,jdbcType=VARCHAR,mode=IN},
+        #{monitor,jdbcType=VARCHAR,mode=IN},
+        #{storeid,jdbcType=INTEGER,mode=IN},
+        #{returned,jdbcType=INTEGER,mode=OUT}
+        )}
+    </select>
+</mapper>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Goods.dao.GoodsDao">
+
+    <sql id="baseColumns" >
+        ID,PID,NormsId,Number,Weight,UserId,SourceId,Packing,Bothday,State,Price,ValueMethod,Cost,CostMethod,FirstCost,LossNum,LossWght,SeatId
+    </sql>
+
+    <insert id="addGoods" parameterType="com.another.Goods.pageModel.PageGoods" >
+        INSERT INTO goods (ID,PID,NormsId,Number,Weight,UserId,SourceId,Packing,Bothday,State,Price,ValueMethod,Cost,CostMethod,FirstCost,LossNum,LossWght,SeatId)
+        VALUES (#{ID,jdbcType=INTEGER},#{PID,jdbcType=INTEGER},#{NormsId,jdbcType=INTEGER},#{Number,jdbcType=VARCHAR},#{Weight,jdbcType=VARCHAR},#{UserId,jdbcType=INTEGER},#{SourceId,jdbcType=INTEGER},#{Packing,jdbcType=VARCHAR},#{Bothday,jdbcType=DATE},#{State,jdbcType=INTEGER},#{Price,jdbcType=VARCHAR},#{ValueMethod,jdbcType=INTEGER},#{Cost,jdbcType=VARCHAR},#{CostMethod,jdbcType=VARCHAR},#{FirstCost,jdbcType=VARCHAR},#{LossNum,jdbcType=VARCHAR},#{LossWght,jdbcType=VARCHAR},#{SeatId,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getGoodsList" parameterType="com.another.Goods.pageModel.PageGoods" resultType="com.another.Goods.entity.Goods" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM goods
+        <include refid="getGoodsListConditionSql" />
+        ORDER BY goods.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getGoodsListConditionSql" >
+        <where>
+            1=1
+            <if test="ID!=null"  >
+               AND ID=#{ID,jdbcType=INTEGER},
+            </if>
+            <if test="PID!=null"  >
+               AND PID=#{PID,jdbcType=INTEGER},
+            </if>
+            <if test="NormsId!=null"  >
+               AND NormsId=#{NormsId,jdbcType=INTEGER},
+            </if>
+            <if test="Number!=null"  >
+               AND Number=#{Number,jdbcType=VARCHAR},
+            </if>
+            <if test="Weight!=null"  >
+               AND Weight=#{Weight,jdbcType=VARCHAR},
+            </if>
+            <if test="UserId!=null"  >
+               AND UserId=#{UserId,jdbcType=INTEGER},
+            </if>
+            <if test="SourceId!=null"  >
+               AND SourceId=#{SourceId,jdbcType=INTEGER},
+            </if>
+            <if test="Packing!=null"  >
+               AND Packing=#{Packing,jdbcType=VARCHAR},
+            </if>
+            <if test="Bothday!=null"  >
+               AND Bothday=#{Bothday,jdbcType=DATE},
+            </if>
+            <if test="State!=null"  >
+               AND State=#{State,jdbcType=INTEGER},
+            </if>
+            <if test="Price!=null"  >
+               AND Price=#{Price,jdbcType=VARCHAR},
+            </if>
+            <if test="ValueMethod!=null"  >
+               AND ValueMethod=#{ValueMethod,jdbcType=INTEGER},
+            </if>
+            <if test="Cost!=null"  >
+               AND Cost=#{Cost,jdbcType=VARCHAR},
+            </if>
+            <if test="CostMethod!=null"  >
+               AND CostMethod=#{CostMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="FirstCost!=null"  >
+               AND FirstCost=#{FirstCost,jdbcType=VARCHAR},
+            </if>
+            <if test="LossNum!=null"  >
+               AND LossNum=#{LossNum,jdbcType=VARCHAR},
+            </if>
+            <if test="LossWght!=null"  >
+               AND LossWght=#{LossWght,jdbcType=VARCHAR},
+            </if>
+            <if test="SeatId!=null"  >
+               AND SeatId=#{SeatId,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getGoodsSize" parameterType="com.another.Goods.pageModel.PageGoods" resultType="Long" >
+        SELECT COUNT(goods.id) FROM goods
+        <include refid="getGoodsListConditionSql" />
+    </select>
+
+    <update id="updateGoods" parameterType="com.another.Goods.pageModel.PageGoods" >
+        UPDATE goods
+        <set>
+            <if test="ID!=null"  >
+               ID=#{ID,jdbcType=INTEGER},
+            </if>
+            <if test="PID!=null"  >
+               PID=#{PID,jdbcType=INTEGER},
+            </if>
+            <if test="NormsId!=null"  >
+               NormsId=#{NormsId,jdbcType=INTEGER},
+            </if>
+            <if test="Number!=null"  >
+               Number=#{Number,jdbcType=VARCHAR},
+            </if>
+            <if test="Weight!=null"  >
+               Weight=#{Weight,jdbcType=VARCHAR},
+            </if>
+            <if test="UserId!=null"  >
+               UserId=#{UserId,jdbcType=INTEGER},
+            </if>
+            <if test="SourceId!=null"  >
+               SourceId=#{SourceId,jdbcType=INTEGER},
+            </if>
+            <if test="Packing!=null"  >
+               Packing=#{Packing,jdbcType=VARCHAR},
+            </if>
+            <if test="Bothday!=null"  >
+               Bothday=#{Bothday,jdbcType=DATE},
+            </if>
+            <if test="State!=null"  >
+               State=#{State,jdbcType=INTEGER},
+            </if>
+            <if test="Price!=null"  >
+               Price=#{Price,jdbcType=VARCHAR},
+            </if>
+            <if test="ValueMethod!=null"  >
+               ValueMethod=#{ValueMethod,jdbcType=INTEGER},
+            </if>
+            <if test="Cost!=null"  >
+               Cost=#{Cost,jdbcType=VARCHAR},
+            </if>
+            <if test="CostMethod!=null"  >
+               CostMethod=#{CostMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="FirstCost!=null"  >
+               FirstCost=#{FirstCost,jdbcType=VARCHAR},
+            </if>
+            <if test="LossNum!=null"  >
+               LossNum=#{LossNum,jdbcType=VARCHAR},
+            </if>
+            <if test="LossWght!=null"  >
+               LossWght=#{LossWght,jdbcType=VARCHAR},
+            </if>
+            <if test="SeatId!=null"  >
+               SeatId=#{SeatId,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE goods.ID=#{id}
+    </update>
+
+    <delete id="deleteGoods" parameterType="com.another.Goods.pageModel.PageGoods" >
+        DELETE FROM goods where ID=#{id}
+    </delete>
+
+    <select id="getGoodsById" parameterType="com.another.Goods.pageModel.PageGoods" resultType="com.another.Goods.entity.Goods">
+        SELECT
+        <include refid="baseColumns" />
+        FROM goods
+        WHERE goods.id=#{id}
+    </select>
+
+
+</mapper>

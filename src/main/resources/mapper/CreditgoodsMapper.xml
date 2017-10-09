@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Creditgoods.dao.CreditgoodsDao">
+
+    <sql id="baseColumns" >
+        id,creditaskid,goodskind
+    </sql>
+
+    <insert id="addCreditgoods" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" >
+        INSERT INTO creditgoods (id,creditaskid,goodskind)
+        VALUES (#{id,jdbcType=INTEGER},#{creditaskid,jdbcType=INTEGER},#{goodskind,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getCreditgoodsList" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" resultType="com.another.Creditgoods.entity.Creditgoods" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM creditgoods
+        <include refid="getCreditgoodsListConditionSql" />
+        ORDER BY creditgoods.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getCreditgoodsListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="creditaskid!=null"  >
+               AND creditaskid=#{creditaskid,jdbcType=INTEGER},
+            </if>
+            <if test="goodskind!=null"  >
+               AND goodskind=#{goodskind,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getCreditgoodsSize" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" resultType="Long" >
+        SELECT COUNT(creditgoods.id) FROM creditgoods
+        <include refid="getCreditgoodsListConditionSql" />
+    </select>
+
+    <update id="updateCreditgoods" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" >
+        UPDATE creditgoods
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="creditaskid!=null"  >
+               creditaskid=#{creditaskid,jdbcType=INTEGER},
+            </if>
+            <if test="goodskind!=null"  >
+               goodskind=#{goodskind,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE creditgoods.ID=#{id}
+    </update>
+
+    <delete id="deleteCreditgoods" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" >
+        DELETE FROM creditgoods where ID=#{id}
+    </delete>
+
+    <select id="getCreditgoodsById" parameterType="com.another.Creditgoods.pageModel.PageCreditgoods" resultType="com.another.Creditgoods.entity.Creditgoods">
+        SELECT
+        <include refid="baseColumns" />
+        FROM creditgoods
+        WHERE creditgoods.id=#{id}
+    </select>
+
+
+</mapper>

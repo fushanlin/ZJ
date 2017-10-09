@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Seatconn.dao.SeatconnDao">
+
+    <sql id="baseColumns" >
+        id,publicseatid,privateseatid
+    </sql>
+
+    <insert id="addSeatconn" parameterType="com.another.Seatconn.pageModel.PageSeatconn" >
+        INSERT INTO seatconn (id,publicseatid,privateseatid)
+        VALUES (#{id,jdbcType=INTEGER},#{publicseatid,jdbcType=INTEGER},#{privateseatid,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getSeatconnList" parameterType="com.another.Seatconn.pageModel.PageSeatconn" resultType="com.another.Seatconn.entity.Seatconn" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM seatconn
+        <include refid="getSeatconnListConditionSql" />
+        ORDER BY seatconn.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getSeatconnListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="publicseatid!=null"  >
+               AND publicseatid=#{publicseatid,jdbcType=INTEGER},
+            </if>
+            <if test="privateseatid!=null"  >
+               AND privateseatid=#{privateseatid,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getSeatconnSize" parameterType="com.another.Seatconn.pageModel.PageSeatconn" resultType="Long" >
+        SELECT COUNT(seatconn.id) FROM seatconn
+        <include refid="getSeatconnListConditionSql" />
+    </select>
+
+    <update id="updateSeatconn" parameterType="com.another.Seatconn.pageModel.PageSeatconn" >
+        UPDATE seatconn
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="publicseatid!=null"  >
+               publicseatid=#{publicseatid,jdbcType=INTEGER},
+            </if>
+            <if test="privateseatid!=null"  >
+               privateseatid=#{privateseatid,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE seatconn.ID=#{id}
+    </update>
+
+    <delete id="deleteSeatconn" parameterType="com.another.Seatconn.pageModel.PageSeatconn" >
+        DELETE FROM seatconn where ID=#{id}
+    </delete>
+
+    <select id="getSeatconnById" parameterType="com.another.Seatconn.pageModel.PageSeatconn" resultType="com.another.Seatconn.entity.Seatconn">
+        SELECT
+        <include refid="baseColumns" />
+        FROM seatconn
+        WHERE seatconn.id=#{id}
+    </select>
+
+
+</mapper>

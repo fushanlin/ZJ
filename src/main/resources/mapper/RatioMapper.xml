@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.another.ratio.dao.RatioDao">
+    <insert id="addratio" parameterType="com.another.ratio.entity.Ratio" useGeneratedKeys="true" keyProperty="id" >
+        insert into ratio(crdtgoodsid,propertylistid,ratio,goodsprolistid) VALUES (#{crdtgoodsid},#{propertylistid},#{ratio},#{goodsprolistid})
+    </insert>
+    <select id="getratio" parameterType="com.another.ratio.entity.Ratio" resultType="com.another.ratio.entity.Ratio">
+        select ratio.id,ratio.componentid,ratio.propertyid,ratio.crdtgoodsid,property.property,component.values,ratio.ratio from ratio inner join property on property.id=ratio.propertyid inner join component on component.id=ratio.componentid where ratio.crdtgoodsid=#{crdtgoodsid}
+    </select>
+</mapper>

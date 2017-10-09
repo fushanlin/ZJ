@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.user.dao.UserDao">
+    <insert id="reguser" parameterType="com.another.user.entity.User" useGeneratedKeys="true" keyProperty="id" >
+      insert into user (account,mphone,password) VALUE(#{account},#{account},MD5(#{password}))
+    </insert>
+    <insert id="adduser" parameterType="com.another.user.entity.User" useGeneratedKeys="true" keyProperty="id" >
+        insert into user (account,mphone,password,pid) VALUE(#{account},#{account},MD5(#{password}),#{pid})
+    </insert>
+    <select id="getuser" parameterType="com.another.user.entity.User" resultType="com.another.user.entity.User">
+        select name,byname,account from user where account like #{account}
+    </select>
+    <select id="checkuser" parameterType="com.another.user.entity.User" resultType="com.another.user.entity.User">
+        select id,name,byname,account from user where (account like #{account}) and (password like MD5(#{password}))
+    </select>
+    <update id="repassword" parameterType="com.another.user.entity.User">
+        update user set password = MD5(#{password}) where account = #{account} and password=MD5(#{oldpassword})
+    </update>
+    <update id="resetpsw" parameterType="com.another.user.entity.User">
+        update user set password = MD5(#{password}) where account = #{account}
+    </update>
+</mapper>
+

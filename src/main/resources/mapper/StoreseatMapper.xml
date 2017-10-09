@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Storeseat.dao.StoreseatDao">
+
+    <sql id="baseColumns" >
+        id,pid,name,storeid,monitor
+    </sql>
+
+    <insert id="addStoreseat" parameterType="com.another.Storeseat.pageModel.PageStoreseat" >
+        INSERT INTO storeseat (id,pid,name,storeid,monitor)
+        VALUES (#{id,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},#{storeid,jdbcType=INTEGER},#{monitor,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getStoreseatList" parameterType="com.another.Storeseat.pageModel.PageStoreseat" resultType="com.another.Storeseat.entity.Storeseat" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM storeseat
+        <include refid="getStoreseatListConditionSql" />
+        ORDER BY storeseat.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getStoreseatListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="pid!=null"  >
+               AND pid=#{pid,jdbcType=INTEGER},
+            </if>
+            <if test="name!=null"  >
+               AND name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="storeid!=null"  >
+               AND storeid=#{storeid,jdbcType=INTEGER},
+            </if>
+            <if test="monitor!=null"  >
+               AND monitor=#{monitor,jdbcType=VARCHAR},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getStoreseatSize" parameterType="com.another.Storeseat.pageModel.PageStoreseat" resultType="Long" >
+        SELECT COUNT(storeseat.id) FROM storeseat
+        <include refid="getStoreseatListConditionSql" />
+    </select>
+
+    <update id="updateStoreseat" parameterType="com.another.Storeseat.pageModel.PageStoreseat" >
+        UPDATE storeseat
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="pid!=null"  >
+               pid=#{pid,jdbcType=INTEGER},
+            </if>
+            <if test="name!=null"  >
+               name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="storeid!=null"  >
+               storeid=#{storeid,jdbcType=INTEGER},
+            </if>
+            <if test="monitor!=null"  >
+               monitor=#{monitor,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        WHERE storeseat.ID=#{id}
+    </update>
+
+    <delete id="deleteStoreseat" parameterType="com.another.Storeseat.pageModel.PageStoreseat" >
+        DELETE FROM storeseat where ID=#{id}
+    </delete>
+
+    <select id="getStoreseatById" parameterType="com.another.Storeseat.pageModel.PageStoreseat" resultType="com.another.Storeseat.entity.Storeseat">
+        SELECT
+        <include refid="baseColumns" />
+        FROM storeseat
+        WHERE storeseat.id=#{id}
+    </select>
+
+
+</mapper>

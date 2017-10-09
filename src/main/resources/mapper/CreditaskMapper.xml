@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.another.Creditask.dao.CreditaskDao">
+
+    <sql id="baseColumns" >
+        id,companyid,createtime,foreigncontractnum,contractnum,foreignid,amount,Loadingportid,dischargeportid,notifyingbankid,paymenterm,deliveryterm,opentime,expirationadr,packagingid,countriesid,transfer,split
+    </sql>
+
+    <insert id="addCreditask" parameterType="com.another.Creditask.pageModel.PageCreditask" >
+        INSERT INTO creditask (id,companyid,createtime,foreigncontractnum,contractnum,foreignid,amount,Loadingportid,dischargeportid,notifyingbankid,paymenterm,deliveryterm,opentime,expirationadr,packagingid,countriesid,transfer,split)
+        VALUES (#{id,jdbcType=INTEGER},#{companyid,jdbcType=INTEGER},#{createtime,jdbcType=DATE},#{foreigncontractnum,jdbcType=VARCHAR},#{contractnum,jdbcType=VARCHAR},#{foreignid,jdbcType=INTEGER},#{amount,jdbcType=VARCHAR},#{Loadingportid,jdbcType=INTEGER},#{dischargeportid,jdbcType=INTEGER},#{notifyingbankid,jdbcType=INTEGER},#{paymenterm,jdbcType=DATE},#{deliveryterm,jdbcType=DATE},#{opentime,jdbcType=DATE},#{expirationadr,jdbcType=VARCHAR},#{packagingid,jdbcType=INTEGER},#{countriesid,jdbcType=INTEGER},#{transfer,jdbcType=INTEGER},#{split,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getCreditaskList" parameterType="com.another.Creditask.pageModel.PageCreditask" resultType="com.another.Creditask.entity.Creditask" >
+        SELECT
+        <include refid="baseColumns" />
+        FROM creditask
+        <include refid="getCreditaskListConditionSql" />
+        ORDER BY creditask.id
+        limit #{start},#{length}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="getCreditaskListConditionSql" >
+        <where>
+            1=1
+            <if test="id!=null"  >
+               AND id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="companyid!=null"  >
+               AND companyid=#{companyid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime!=null"  >
+               AND createtime=#{createtime,jdbcType=DATE},
+            </if>
+            <if test="foreigncontractnum!=null"  >
+               AND foreigncontractnum=#{foreigncontractnum,jdbcType=VARCHAR},
+            </if>
+            <if test="contractnum!=null"  >
+               AND contractnum=#{contractnum,jdbcType=VARCHAR},
+            </if>
+            <if test="foreignid!=null"  >
+               AND foreignid=#{foreignid,jdbcType=INTEGER},
+            </if>
+            <if test="amount!=null"  >
+               AND amount=#{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="Loadingportid!=null"  >
+               AND Loadingportid=#{Loadingportid,jdbcType=INTEGER},
+            </if>
+            <if test="dischargeportid!=null"  >
+               AND dischargeportid=#{dischargeportid,jdbcType=INTEGER},
+            </if>
+            <if test="notifyingbankid!=null"  >
+               AND notifyingbankid=#{notifyingbankid,jdbcType=INTEGER},
+            </if>
+            <if test="paymenterm!=null"  >
+               AND paymenterm=#{paymenterm,jdbcType=DATE},
+            </if>
+            <if test="deliveryterm!=null"  >
+               AND deliveryterm=#{deliveryterm,jdbcType=DATE},
+            </if>
+            <if test="opentime!=null"  >
+               AND opentime=#{opentime,jdbcType=DATE},
+            </if>
+            <if test="expirationadr!=null"  >
+               AND expirationadr=#{expirationadr,jdbcType=VARCHAR},
+            </if>
+            <if test="packagingid!=null"  >
+               AND packagingid=#{packagingid,jdbcType=INTEGER},
+            </if>
+            <if test="countriesid!=null"  >
+               AND countriesid=#{countriesid,jdbcType=INTEGER},
+            </if>
+            <if test="transfer!=null"  >
+               AND transfer=#{transfer,jdbcType=INTEGER},
+            </if>
+            <if test="split!=null"  >
+               AND split=#{split,jdbcType=INTEGER},
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="getCreditaskSize" parameterType="com.another.Creditask.pageModel.PageCreditask" resultType="Long" >
+        SELECT COUNT(creditask.id) FROM creditask
+        <include refid="getCreditaskListConditionSql" />
+    </select>
+
+    <update id="updateCreditask" parameterType="com.another.Creditask.pageModel.PageCreditask" >
+        UPDATE creditask
+        <set>
+            <if test="id!=null"  >
+               id=#{id,jdbcType=INTEGER},
+            </if>
+            <if test="companyid!=null"  >
+               companyid=#{companyid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime!=null"  >
+               createtime=#{createtime,jdbcType=DATE},
+            </if>
+            <if test="foreigncontractnum!=null"  >
+               foreigncontractnum=#{foreigncontractnum,jdbcType=VARCHAR},
+            </if>
+            <if test="contractnum!=null"  >
+               contractnum=#{contractnum,jdbcType=VARCHAR},
+            </if>
+            <if test="foreignid!=null"  >
+               foreignid=#{foreignid,jdbcType=INTEGER},
+            </if>
+            <if test="amount!=null"  >
+               amount=#{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="Loadingportid!=null"  >
+               Loadingportid=#{Loadingportid,jdbcType=INTEGER},
+            </if>
+            <if test="dischargeportid!=null"  >
+               dischargeportid=#{dischargeportid,jdbcType=INTEGER},
+            </if>
+            <if test="notifyingbankid!=null"  >
+               notifyingbankid=#{notifyingbankid,jdbcType=INTEGER},
+            </if>
+            <if test="paymenterm!=null"  >
+               paymenterm=#{paymenterm,jdbcType=DATE},
+            </if>
+            <if test="deliveryterm!=null"  >
+               deliveryterm=#{deliveryterm,jdbcType=DATE},
+            </if>
+            <if test="opentime!=null"  >
+               opentime=#{opentime,jdbcType=DATE},
+            </if>
+            <if test="expirationadr!=null"  >
+               expirationadr=#{expirationadr,jdbcType=VARCHAR},
+            </if>
+            <if test="packagingid!=null"  >
+               packagingid=#{packagingid,jdbcType=INTEGER},
+            </if>
+            <if test="countriesid!=null"  >
+               countriesid=#{countriesid,jdbcType=INTEGER},
+            </if>
+            <if test="transfer!=null"  >
+               transfer=#{transfer,jdbcType=INTEGER},
+            </if>
+            <if test="split!=null"  >
+               split=#{split,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        WHERE creditask.ID=#{id}
+    </update>
+
+    <delete id="deleteCreditask" parameterType="com.another.Creditask.pageModel.PageCreditask" >
+        DELETE FROM creditask where ID=#{id}
+    </delete>
+
+    <select id="getCreditaskById" parameterType="com.another.Creditask.pageModel.PageCreditask" resultType="com.another.Creditask.entity.Creditask">
+        SELECT
+        <include refid="baseColumns" />
+        FROM creditask
+        WHERE creditask.id=#{id}
+    </select>
+
+
+</mapper>
